@@ -1,0 +1,22 @@
+
+import React from 'react';
+import {
+  NavLink,
+} from 'react-router-dom';
+
+const Nav = (props) => (
+
+  <nav className="main-nav">
+    <ul>
+      <li><NavLink to='/cats'>Cats</NavLink></li>
+      <li><NavLink to='/dogs'>Dogs</NavLink></li>
+      <li><NavLink to='/kangaroos'>Kangaroos</NavLink></li>
+    </ul>
+  </nav>
+
+  /* <Route path="/cats" render={ () => }></Route> */
+
+)
+
+export default Nav; 
+
