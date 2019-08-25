@@ -10,7 +10,7 @@ class SearchForm extends Component {
         this.props.onSearch(this.searchQuery.value);
         let inputQuery = this.searchQuery.value;
         let path = `/${inputQuery}`;
-        this.props.history.push(path);
+        // this.props.history.push(path);
         e.currentTarget.reset();
     }
 
