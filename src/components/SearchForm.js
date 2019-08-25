@@ -1,8 +1,11 @@
 
 import React, {Component} from 'react';
+// import { Route } from 'react-router-dom';
 
 class SearchForm extends Component {
 
+
+    // on form submit, passes the input value to the performSearch function in App.js
     handleSearchQuery = e => {
         e.preventDefault();
         this.props.onSearch(this.searchQuery.value);
@@ -20,7 +23,6 @@ class SearchForm extends Component {
                     </svg>
                 </button>
             </form>
-
         )
     }
 }

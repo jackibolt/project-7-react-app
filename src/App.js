@@ -4,6 +4,9 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {
   BrowserRouter,
+  // Switch,
+  Redirect,
+  Route
 } from 'react-router-dom';
 
 
@@ -24,35 +27,46 @@ class App extends Component {
 
   state = {
     pics: [],
-    searchQuery: 'turtles'
+    searchQuery: 'cats',
+    buttonTags: ['Cats', 'Dogs', 'Kangaroos']
   }
 
   componentDidMount() {
-
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.state.searchQuery}&per_page=24&format=json&nojsoncallback=1`)
+    .then(response => {
+      this.setState({
+        pics: response.data.photos.photo
+      });
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
   }
 
   performSearch = query => {
-    // console.log(this.state.searchQuery)
-    if (this.state.searchQuery !== query){
+
+    // set state of searchQuery to form input value
+    // if (this.state.searchQuery !== query){
       this.setState({
         searchQuery: query
       })
+    // }
 
-    // console.log(this.state.searchQuery)
-
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.state.searchQuery}&per_page=24&format=json&nojsoncallback=1`)
-      .then(response => {
-        this.setState({
-          pics: response.data.photos.photo
-        });
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-    }
+    // get JSON data corresponding to searchQuery
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+    .then(response => {
+      this.setState({
+        pics: response.data.photos.photo
+      });
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
   }
 
     render () {
+      // console.log(this.state.pics)
+      // console.log(this.state.searchQuery)
       return (
         <div>
           <header className="App-header">
@@ -60,10 +74,21 @@ class App extends Component {
           </header>
           <BrowserRouter>
             <div className="container">
-              <SearchForm onSearch={this.performSearch} />
-              <Nav />
-              <PhotoContainer data={this.state.pics} />
+              <SearchForm 
+                onSearch={this.performSearch} />
+              
+              <Nav 
+                onClick={this.performSearch}
+                navButtons={this.state.buttonTags} />
+  
+              <Route path='/' render={ () => <Redirect to={this.state.buttonTags[0]}/> } />
+              <Route path={`/:${this.state.searchQuery}`} render={ () => 
+                <PhotoContainer 
+                  data={this.state.pics}
+                  searchTitle={this.state.searchQuery} />} />
+
             </div>
+
           </BrowserRouter>
         </div>  
       );
