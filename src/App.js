@@ -27,30 +27,22 @@ class App extends Component {
 
   state = {
     pics: [],
-    searchQuery: 'cats',
+    searchQuery: '',
     buttonTags: ['Cats', 'Dogs', 'Kangaroos']
   }
 
   componentDidMount() {
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${this.state.searchQuery}&per_page=24&format=json&nojsoncallback=1`)
-    .then(response => {
-      this.setState({
-        pics: response.data.photos.photo
-      });
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
+
   }
 
   performSearch = query => {
 
     // set state of searchQuery to form input value
-    // if (this.state.searchQuery !== query){
+    if (this.state.searchQuery !== query){
       this.setState({
         searchQuery: query
       })
-    // }
+    }
 
     // get JSON data corresponding to searchQuery
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
@@ -82,7 +74,7 @@ class App extends Component {
                 navButtons={this.state.buttonTags} />
   
               <Route path='/' render={ () => <Redirect to={this.state.buttonTags[0]}/> } />
-              <Route path={`/:${this.state.searchQuery}`} render={ () => 
+              <Route path='/:query' render={ () => 
                 <PhotoContainer 
                   data={this.state.pics}
                   searchTitle={this.state.searchQuery} />} />

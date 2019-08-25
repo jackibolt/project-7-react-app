@@ -4,11 +4,13 @@ import React, {Component} from 'react';
 
 class SearchForm extends Component {
 
-
     // on form submit, passes the input value to the performSearch function in App.js
     handleSearchQuery = e => {
         e.preventDefault();
         this.props.onSearch(this.searchQuery.value);
+        let inputQuery = this.searchQuery.value;
+        let path = `/${inputQuery}`;
+        this.props.history.push(path);
         e.currentTarget.reset();
     }
 
