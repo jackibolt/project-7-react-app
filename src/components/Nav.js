@@ -2,7 +2,8 @@
 import React, {Component} from 'react';
 import {
   Link,
-  Route
+  Route,
+  Switch
 } from 'react-router-dom';
 
 /* To change Nav Button labels, change initial stata in App.js */
@@ -21,11 +22,11 @@ class Nav extends Component {
           <li><Link to={`/${buttons[2]}`}>{buttons[2]}</Link></li>
         </ul>
 
-
+        <Switch>
           <Route path={`/${buttons[0]}`} render={ () => this.props.onClick(buttons[0]) } />
           <Route path={`/${buttons[1]}`} render={ () => this.props.onClick(buttons[1]) } />
           <Route path={`/${buttons[2]}`} render={ () => this.props.onClick(buttons[2]) } />
-
+        </Switch>
       </nav>
     );
   }

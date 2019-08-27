@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react';
-// import { Route } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class SearchForm extends Component {
 
@@ -10,7 +10,7 @@ class SearchForm extends Component {
         this.props.onSearch(this.searchQuery.value);
         let inputQuery = this.searchQuery.value;
         let path = `/${inputQuery}`;
-        // this.props.history.push(path);
+        this.props.history.push(path);
         e.currentTarget.reset();
     }
 
@@ -29,4 +29,4 @@ class SearchForm extends Component {
     }
 }
 
-export default SearchForm;
+export default withRouter(SearchForm);
